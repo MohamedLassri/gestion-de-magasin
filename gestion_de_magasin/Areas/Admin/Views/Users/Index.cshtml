@@ -1,0 +1,27 @@
+﻿@model IEnumerable<gestion_de_magasin.Models.ApplicationUser>
+
+@{
+    ViewData["Title"] = "Gestion Utilisateurs";
+}
+
+<h1 class="mt-4">Liste des Utilisateurs</h1>
+
+<table class="table table-bordered table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Rôle</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.NomComplet</td>
+                <td>@user.Email</td>
+                <td><span class="badge bg-info">@user.Role</span></td>
+            </tr>
+        }
+    </tbody>
+</table>

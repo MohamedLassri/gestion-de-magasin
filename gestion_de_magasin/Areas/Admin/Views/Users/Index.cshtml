@@ -1,27 +1,58 @@
 ﻿@model IEnumerable<gestion_de_magasin.Models.ApplicationUser>
 
-@{
-    ViewData["Title"] = "Gestion Utilisateurs";
-}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary">Gestion des Utilisateurs</h2>
+        <a href="/Admin/Users/Create" class="btn btn-success">
+            <i class="bi bi-person-plus"></i> Ajouter un employé
+        </a>
+    </div>
 
-<h1 class="mt-4">Liste des Utilisateurs</h1>
-
-<table class="table table-bordered table-striped mt-3">
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Email</th>
-            <th>Rôle</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model)
-        {
+    <table class="table table-bordered table-striped shadow-sm bg-white">
+        <thead class="table-dark">
             <tr>
-                <td>@user.NomComplet</td>
-                <td>@user.Email</td>
-                <td><span class="badge bg-info">@user.Role</span></td>
+                <th>Nom Complet</th>
+                <th>Email</th>
+                <th>Rôle Actuel</th>
+                <th>Changer le Rôle</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.NomComplet</td>
+                    <td>@user.Email</td>
+                    <td>
+                        <span class="badge @(user.Role == "Admin" ? "bg-danger" : "bg-primary")">
+                            @user.Role
+                        </span>
+                    </td>
+                    <td>
+                        @if (user.Email != "admin@magasin.com")
+                        {
+                            <form asp-action="ChangeRole" method="post" class="d-flex gap-2">
+                                <input type="hidden" name="userId" value="@user.Id" />
+                                <select name="newRole" class="form-select form-select-sm" style="width: 120px;">
+                                    <option value="Gerant">Gérant</option>
+                                    <option value="Vendeur">Vendeur</option>
+                                </select>
+                                <button type="submit" class="btn btn-sm btn-warning">Valider</button>
+                            </form>
+                        }
+                    </td>
+                    <td>
+                        @if (user.Email != "admin@magasin.com")
+                        {
+                            <form asp-action="DeleteUser" method="post" onsubmit="return confirm('Supprimer ce compte ?');">
+                                <input type="hidden" name="id" value="@user.Id" />
+                                <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,36 @@
+﻿@model gestion_de_magasin.Models.ApplicationUser
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4>Ajouter un nouvel employé</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken() <div class="mb-3">
+                    <label class="form-label">Nom Complet</label>
+                    <input name="nomComplet" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input name="email" type="email" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Mot de passe</label>
+                    <input name="password" type="password" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Rôle</label>
+                    <select name="role" class="form-select">
+                        <option value="Gerant">Gérant</option>
+                        <option value="Vendeur">Vendeur</option>
+                    </select>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    <a asp-action="Index" class="btn btn-secondary">Retour</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
